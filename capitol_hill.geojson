@@ -1,0 +1,366 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3121,
+          47.6324
+        ]
+      },
+      "properties": {
+        "place_id": 1,
+        "name": "Louisa Boren Park",
+        "location_description": "Start of the walk, located at 15th Avenue E and E Galer St/E Garfield St",
+        "relative_distance": "start",
+        "sense_of_place_type": "Memory / Commemoration",
+        "sense_explanation": "Honors Louisa Boren, one of Seattle's earliest citizens and founders; contains historic trees moved from Denny Park.",
+        "rhetorical_usage": "'hidden little treasure on Capitol Hill.'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.316,
+          47.6337
+        ]
+      },
+      "properties": {
+        "place_id": 2,
+        "name": "Grand Army of the Republic Cemetery",
+        "location_description": "On E Howe Street, north side of the road, west of Federal Ave E",
+        "relative_distance": "Walk north one block on 15th Ave E, then west on E Howe St.",
+        "sense_of_place_type": "Commemoration / History",
+        "sense_explanation": "Cemetery for Civil War veterans, including Union and Confederate soldiers, reflecting a specific historical period and its participants.",
+        "rhetorical_usage": "To get a feel for the layout of the tombstones, walk to the obelisk..."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3191,
+          47.6316
+        ]
+      },
+      "properties": {
+        "place_id": 3,
+        "name": "Streissguth Gardens",
+        "location_description": "West of 10th Avenue E, accessed by descending 70 steps from E Blaine Street",
+        "relative_distance": "Side trip: From 10th Ave E & E Blaine St, walk west and descend steps.",
+        "sense_of_place_type": "Sanctuary / Stewardship",
+        "sense_explanation": "A family-started garden now owned by the city, described as a 'little urban oasis,' implying peace and community care.",
+        "rhetorical_usage": "'little urban oasis'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3193,
+          47.6297
+        ]
+      },
+      "properties": {
+        "place_id": 4,
+        "name": "Leary Mansion (Office of the Bishop)",
+        "location_description": "On 10th Avenue E, north of E Highland Drive, former home of John Leary",
+        "relative_distance": "Walk south on 10th Ave E from E Blaine St.",
+        "sense_of_place_type": "Historical Transformation / Prestige",
+        "sense_explanation": "Former home of prominent citizen John Leary, later Red Cross HQ, then Episcopal Diocese; its 'lovely sandstone' signifies its grandeur.",
+        "rhetorical_usage": "'grand building,' 'lovely sandstone'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3209,
+          47.629
+        ]
+      },
+      "properties": {
+        "place_id": 5,
+        "name": "Sam Hill Mansion",
+        "location_description": "North side of E Highland Drive, just past Broadway E, former home of Samuel Hill",
+        "relative_distance": "South on 10th Ave E, then west on E Highland Drive past Broadway E.",
+        "sense_of_place_type": "Ambition / Monumentality",
+        "sense_explanation": "Built by railroad executive Samuel Hill with 10-ft thick concrete walls, possibly to host royalty, showcasing grand aspirations and unique features.",
+        "rhetorical_usage": "'walls are 10 feet thick... reinforced with massive steel rails,' 'rooftop garden... park-like setting.'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.321,
+          47.6284
+        ]
+      },
+      "properties": {
+        "place_id": 6,
+        "name": "Horace Chapin Henry Property",
+        "location_description": "Northwest corner of Harvard Avenue E and E Prospect Street, former estate site",
+        "relative_distance": "Follow E Highland Dr curving left, then south on Harvard Ave E to E Prospect St.",
+        "sense_of_place_type": "Philanthropy / Legacy / Change",
+        "sense_explanation": "Site of former grand estate, donated for a library, then sold to fund current library branch (Susan J. Henry Branch), showing evolving use.",
+        "rhetorical_usage": "estate... all of which were demolished and eventually replaced"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3231,
+          47.6268
+        ]
+      },
+      "properties": {
+        "place_id": 7,
+        "name": "Garry Oak Tree (in Harvard-Belmont Historic District)",
+        "location_description": "On the corner of Belmont Place E and Belmont Avenue E",
+        "relative_distance": "West on E Prospect St, follow Prospect to Belmont Pl E, then south to Belmont Ave E.",
+        "sense_of_place_type": "Natural Heritage / Resilience",
+        "sense_explanation": "Washington's 'lone native oak,' a rare species this far north, surviving since at least 1928 amidst urban development.",
+        "rhetorical_usage": "'large and unusual tree,' 'lone native oak'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3209,
+          47.626
+        ]
+      },
+      "properties": {
+        "place_id": 8,
+        "name": "Cornish College of Arts (Kerry Hall)",
+        "location_description": "E Roy Street at Harvard Avenue E",
+        "relative_distance": "East on E Roy Street to Harvard Ave E.",
+        "sense_of_place_type": "Artistic Inspiration / Cultural Foundation",
+        "sense_explanation": "Founded by Nellie Cornish, building designed to inspire students with names of famous artists, reflecting aspirations for arts in Seattle.",
+        "rhetorical_usage": "Building's appearance had 'both the restraint and freedom of Venetian, the Spanish, the Levant, and even of Tibet.'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3204,
+          47.626
+        ]
+      },
+      "properties": {
+        "place_id": 9,
+        "name": "Daughters of the American Revolution (DAR) House",
+        "location_description": "East side of Harvard Avenue E at E Roy Street",
+        "relative_distance": "Adjacent, on the east side of Harvard Ave E at E Roy St.",
+        "sense_of_place_type": "Ancestral Homage / Civic Identity",
+        "sense_explanation": "A copy of George Washington's Mount Vernon, built by the Daughters of the American Revolution, representing historical reverence.",
+        "rhetorical_usage": "'a copy of George Washington's home, Mount Vernon.'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.32,
+          47.626
+        ]
+      },
+      "properties": {
+        "place_id": 10,
+        "name": "Loveless Building",
+        "location_description": "Northwest corner of E Roy Street and Broadway E",
+        "relative_distance": "Walk one block east on E Roy Street to Broadway E.",
+        "sense_of_place_type": "Artistic Enclave / European Charm",
+        "sense_explanation": "Described as a 'little bit of England,' designed by Arthur Loveless for local artists, with a private courtyard.",
+        "rhetorical_usage": "'little bit of England'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3185,
+          47.6261
+        ]
+      },
+      "properties": {
+        "place_id": 11,
+        "name": "Anhalt Apartments (on E Roy Street)",
+        "location_description": "On either side of E Roy Street, east of Broadway E, before 10th Ave E",
+        "relative_distance": "East on E Roy Street past Broadway E.",
+        "sense_of_place_type": "Romanticized Domesticity / Architectural Signature",
+        "sense_explanation": "Known for 'elegant Capitol Hill apartments' with French Norman elements, creating a distinctive, house-like feel.",
+        "rhetorical_usage": "'elegant Capitol Hill apartments with their French Norman inspired elements'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.314,
+          47.626
+        ]
+      },
+      "properties": {
+        "place_id": 12,
+        "name": "\"Millionaire's Row\" Granite Hitching Post",
+        "location_description": "West side of the intersection of 14th Avenue E and E Roy Street",
+        "relative_distance": "Walk east on Roy St (path then street), south on 13th Ave E, east on E Mercer St, then north on 14th Ave E to E Roy St.",
+        "sense_of_place_type": "Historical Vestige / Bygone Era",
+        "sense_explanation": "A 'rare sign of early Seattle,' a granite hitching post from the horse-drawn era, marking an entrance to 'Millionaire's Row.'",
+        "rhetorical_usage": "'rare sign of early Seattle'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3139,
+          47.6269
+        ]
+      },
+      "properties": {
+        "place_id": 13,
+        "name": "Elbridge Amos Stuart Stepping Stone",
+        "location_description": "Southeast corner of E Valley Street and 14th Avenue E, close to the road",
+        "relative_distance": "One block north on 14th Ave E from E Roy St.",
+        "sense_of_place_type": "Affluence / Everyday History",
+        "sense_explanation": "A granite stepping stone for carriages, owned by Carnation Milk's founder, another 'remnant of the city's early equestrian history.'",
+        "rhetorical_usage": "'remnant of the city's early equestrian history'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.314,
+          47.6278
+        ]
+      },
+      "properties": {
+        "place_id": 14,
+        "name": "James A. Moore Mansion",
+        "location_description": "Southwest corner of 14th Avenue E and E Aloha Street",
+        "relative_distance": "One block north on 14th Ave E from E Valley St to E Aloha St.",
+        "sense_of_place_type": "Developer's Imprint / Urban Shaping",
+        "sense_explanation": "Home of Capitol Hill's developer James A. Moore, who significantly influenced Seattle's formation.",
+        "rhetorical_usage": "Capitol Hill's developer James A. Moore."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3143,
+          47.6293
+        ]
+      },
+      "properties": {
+        "place_id": 15,
+        "name": "Volunteer Park Water Tower",
+        "location_description": "Inside Volunteer Park, near the south entrance from 14th Avenue E",
+        "relative_distance": "Walk north on 14th Avenue E into Volunteer Park.",
+        "sense_of_place_type": "Civic Utility / Scenic Vista",
+        "sense_explanation": "A 1906 brick water tower essential for water supply, offering '106 steps up to an observation area with views of the city.'",
+        "rhetorical_usage": "'city—best in winter when leaves don't block the scenery'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3147,
+          47.6305
+        ]
+      },
+      "properties": {
+        "place_id": 16,
+        "name": "Seattle Asian Art Museum",
+        "location_description": "East side of the main road in Volunteer Park, north of the water tower (original Seattle Art Museum building)",
+        "relative_distance": "Follow main road north from water tower in Volunteer Park.",
+        "sense_of_place_type": "Cultural Transition / Architectural Statement",
+        "sense_explanation": "Originally the Seattle Art Museum, now housing the Asian Art Museum, its design broke from traditional styles, signifying a progressive architectural approach.",
+        "rhetorical_usage": "'Architectural historians consider it a very progressive design for its time'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3146,
+          47.631
+        ]
+      },
+      "properties": {
+        "place_id": 17,
+        "name": "Volunteer Park Conservatory",
+        "location_description": "North of the Seattle Asian Art Museum, inside Volunteer Park",
+        "relative_distance": "Short walk north from the Asian Art Museum.",
+        "sense_of_place_type": "Enchantment / Living Heritage",
+        "sense_explanation": "A 1912 glass conservatory, based on London's Crystal Palace, housing an 'enticing collection' that is 'ever-changing and always delightful.'",
+        "rhetorical_usage": "'enticing collection... ever-changing and always delightful.'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3123,
+          47.632
+        ]
+      },
+      "properties": {
+        "place_id": 18,
+        "name": "Concrete Blocks of Retaining Wall (Former Streetcar Slabs)",
+        "location_description": "Retaining wall on the west side of 15th Avenue E, north of Volunteer Park's E Galer St exit",
+        "relative_distance": "Exit Volunteer Park to 15th Ave E, turn north.",
+        "sense_of_place_type": "Industrial Archaeology / Urban Traces",
+        "sense_explanation": "Concrete slabs with holes are remnants of the former streetcar system from 1901, revealing layers of city's transportation history.",
+        "rhetorical_usage": "'Note the concrete blocks... the trolley's steel rails sat atop and were attached to the slabs.'"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.3148,
+          47.6325
+        ]
+      },
+      "properties": {
+        "place_id": 19,
+        "name": "Lake View Cemetery",
+        "location_description": "West of 15th Avenue E, adjacent to Volunteer Park",
+        "relative_distance": "Across 15th Avenue E to the west (near end of walk).",
+        "sense_of_place_type": "Diverse Heritage / Final Resting Place",
+        "sense_explanation": "One of Seattle's oldest and most diverse cemeteries, holding graves of key city settlers and notable figures, reflecting the city's varied history.",
+        "rhetorical_usage": "'one of the oldest in the city and one of the most diverse'"
+      }
+    }
+  ]
+}

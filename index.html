@@ -1,0 +1,414 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seattle Capitol Hill Walk</title>
+  <link href="https://unpkg.com/maplibre-gl@4.1.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: #333;
+      line-height: 1.6;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      /* Prevent body scrollbars */
+    }
+
+    #app-container {
+      display: flex;
+      height: 100%;
+      width: 100%;
+    }
+
+    #sidebar {
+      width: 35%;
+      min-width: 320px;
+      max-width: 480px;
+      overflow-y: auto;
+      padding: 25px;
+      box-sizing: border-box;
+      background-color: #f8f9fa;
+      border-right: 1px solid #dee2e6;
+    }
+
+    #sidebar h1 {
+      font-size: 1.75em;
+      margin-top: 0;
+      margin-bottom: 20px;
+      color: #212529;
+    }
+
+    #story-chapters {
+      outline: none;
+    }
+
+    .chapter {
+      padding: 18px;
+      margin-bottom: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.075);
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+      border-left: 5px solid transparent;
+    }
+
+    .chapter:hover {
+      background-color: #f1f3f5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chapter:focus-visible {
+      outline: 2px solid #007bff;
+      outline-offset: 2px;
+    }
+
+    .chapter.active {
+      background-color: #e9ecef;
+      border-left-color: #007bff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .chapter h2 {
+      font-size: 1.3em;
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #0056b3;
+    }
+
+    .chapter p {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 0.95em;
+    }
+
+    .chapter p strong {
+      color: #495057;
+    }
+
+    .chapter em {
+      color: #6c757d;
+      font-style: italic;
+      display: block;
+      margin-top: 10px;
+      padding-left: 15px;
+      border-left: 3px solid #ced4da;
+    }
+
+    .chapter img {
+      width: 100%;
+      height: auto;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-top: 12px;
+      border: 1px solid #e9ecef;
+    }
+
+    #map {
+      flex-grow: 1;
+      height: 100%;
+      background-color: #e0e0e0;
+    }
+
+    .custom-marker {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 30px;
+      height: 30px;
+      background-color: #e74c3c;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: transform 0.15s ease-out, background-color 0.15s ease-out;
+    }
+
+    .custom-marker:hover {
+      transform: scale(1.15);
+    }
+
+    .custom-marker.active-marker {
+      background-color: #007bff;
+      transform: scale(1.25);
+    }
+
+    .maplibregl-popup {
+      max-width: 220px !important;
+      font-size: 0.9em;
+    }
+
+    .maplibregl-popup-content {
+      padding: 10px 15px !important;
+      border-radius: 6px !important;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .maplibregl-popup-close-button {
+      font-size: 1.3em;
+      padding: 0 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app-container">
+    <aside id="sidebar" tabindex="-1">
+      <h1>Capitol Hill Senses of Place</h1>
+      <div id="story-chapters" role="list">
+        <!-- Chapters will be dynamically inserted here -->
+      </div>
+    </aside>
+    <main id="map" aria-label="Map of Capitol Hill walk locations"></main>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl@4.1.0/dist/maplibre-gl.js"></script>
+  <script>
+    const MAP_STYLE_URL = 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json'; // Configurable basemap
+    const GEOJSON_URL = 'capitol_hill.geojson';
+    const PLACEHOLDER_IMG_SERVICE_URL = 'https://via.placeholder.com/400x250.png?text=';
+
+    let map;
+    const sidebar = document.getElementById('sidebar');
+    const storyChaptersContainer = document.getElementById('story-chapters');
+    let geojsonData = null;
+    const markers = []; // To store {id, marker, coordinates}
+    const chapters = {}; // To store chapter DOM elements {place_id: element}
+    let currentActiveChapterId = null;
+    let lastActivatedByScroll = null; // Helps manage scroll vs click activation
+
+    document.addEventListener('DOMContentLoaded', () => {
+      map = new maplibregl.Map({
+        container: 'map',
+        style: MAP_STYLE_URL,
+        center: [-122.3210, 47.6170], // Approx center of Capitol Hill
+        zoom: 13.5,
+        attributionControl: true
+      });
+
+      map.addControl(new maplibregl.NavigationControl(), 'top-right');
+      map.addControl(new maplibregl.FullscreenControl());
+
+      map.on('load', () => {
+        loadStory();
+      });
+    });
+
+    async function loadStory() {
+      try {
+        const response = await fetch(GEOJSON_URL);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}. Failed to load ${GEOJSON_URL}`);
+        }
+        geojsonData = await response.json();
+
+        if (!geojsonData || !geojsonData.features || geojsonData.features.length === 0) {
+          storyChaptersContainer.innerHTML = `<p>No features found in GeoJSON data.</p>`;
+          return;
+        }
+
+        geojsonData.features.sort((a, b) => a.properties.place_id - b.properties.place_id);
+
+        populateSidebarAndMarkers();
+        setupScrollListener();
+
+        if (geojsonData.features.length > 0) {
+          const firstPlaceId = geojsonData.features[0].properties.place_id;
+          flyToChapter(firstPlaceId);
+          setActiveChapter(firstPlaceId);
+        }
+      } catch (error) {
+        console.error("Could not load or process GeoJSON data:", error);
+        storyChaptersContainer.innerHTML = `<p style="color:red;">Error loading story: ${error.message}.<br>Please ensure 'capitol_hill.geojson' is in the same folder and is valid JSON.</p>`;
+      }
+    }
+
+    function populateSidebarAndMarkers() {
+      geojsonData.features.forEach((feature) => {
+        const props = feature.properties;
+        const coordinates = feature.geometry.coordinates;
+
+        const chapterDiv = document.createElement('article');
+        chapterDiv.id = `chapter-${props.place_id}`;
+        chapterDiv.classList.add('chapter');
+        chapterDiv.setAttribute('tabindex', '0');
+        chapterDiv.setAttribute('role', 'listitem');
+        chapterDiv.setAttribute('aria-label', `View details for ${props.name}`);
+
+        const placeholderName = props.name.length > 18 ? props.name.substring(0, 15) + "..." : props.name;
+        const imageUrl = `${PLACEHOLDER_IMG_SERVICE_URL}${encodeURIComponent(placeholderName)}`;
+        // To use Unsplash: const imageUrl = `https://source.unsplash.com/400x250/?${encodeURIComponent(props.name + ", Seattle, landmark")}`;
+
+
+        chapterDiv.innerHTML = `
+                    <h2>${props.place_id}. ${props.name}</h2>
+                    <p><strong>Location:</strong> ${props.location_description}</p>
+                    <p><strong>Sense of Place:</strong> ${props.sense_of_place_type}</p>
+                    <p>${props.sense_explanation}</p>
+                    <em>"${props.rhetorical_usage}"</em>
+                    <img src="${imageUrl}" alt="Image of ${props.name}" loading="lazy">
+                `;
+        storyChaptersContainer.appendChild(chapterDiv);
+        chapters[props.place_id] = chapterDiv;
+
+        chapterDiv.addEventListener('click', () => {
+          flyToChapter(props.place_id);
+          setActiveChapter(props.place_id);
+          lastActivatedByScroll = props.place_id; // Hint for scroll listener
+        });
+        chapterDiv.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            flyToChapter(props.place_id);
+            setActiveChapter(props.place_id);
+            lastActivatedByScroll = props.place_id; // Hint for scroll listener
+          }
+        });
+
+        const markerEl = document.createElement('div');
+        markerEl.className = 'custom-marker';
+        markerEl.innerText = props.place_id;
+        markerEl.setAttribute('aria-label', `Marker for ${props.name}`);
+        markerEl.title = `${props.place_id}. ${props.name}`;
+
+        const marker = new maplibregl.Marker({ element: markerEl, anchor: 'center' })
+          .setLngLat(coordinates)
+          .setPopup(new maplibregl.Popup({ offset: 25, closeButton: false })
+            .setText(`${props.place_id}. ${props.name}`))
+          .addTo(map);
+
+        markers.push({ id: props.place_id, marker: marker, coordinates: coordinates });
+
+        markerEl.addEventListener('mouseenter', () => marker.togglePopup());
+        markerEl.addEventListener('mouseleave', () => marker.togglePopup());
+        markerEl.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent map click event if marker is clicked
+          flyToChapter(props.place_id);
+          setActiveChapter(props.place_id);
+          chapters[props.place_id].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          lastActivatedByScroll = props.place_id; // Hint for scroll listener
+        });
+      });
+    }
+
+    function flyToChapter(placeId) {
+      const featureData = geojsonData.features.find(f => f.properties.place_id === placeId);
+      if (featureData) {
+        // Check if map is already centered there (approximately) and zoomed appropriately
+        const currentCenter = map.getCenter();
+        const targetCenter = featureData.geometry.coordinates;
+        const R = 6371e3; // metres
+        const phi1 = currentCenter.lat * Math.PI / 180;
+        const phi2 = targetCenter[1] * Math.PI / 180;
+        const deltaPhi = (targetCenter[1] - currentCenter.lat) * Math.PI / 180;
+        const deltaLambda = (targetCenter[0] - currentCenter.lng) * Math.PI / 180;
+        const a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+          Math.cos(phi1) * Math.cos(phi2) *
+          Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const distance = R * c; // Distance in metres
+
+        // Only fly if it's further than ~10m or significantly different zoom
+        if (distance > 10 || Math.abs(map.getZoom() - 16) > 1) {
+          map.flyTo({
+            center: featureData.geometry.coordinates,
+            zoom: 16,
+            essential: true, // respects prefers-reduced-motion
+            duration: 1200 // ms
+          });
+        }
+      }
+    }
+
+    function setActiveChapter(placeId) {
+      if (currentActiveChapterId !== null && chapters[currentActiveChapterId]) {
+        chapters[currentActiveChapterId].classList.remove('active');
+        chapters[currentActiveChapterId].removeAttribute('aria-current');
+        markers.find(m => m.id === currentActiveChapterId)?.marker.getElement().classList.remove('active-marker');
+      }
+
+      if (chapters[placeId]) {
+        chapters[placeId].classList.add('active');
+        chapters[placeId].setAttribute('aria-current', 'step');
+        const activeMarker = markers.find(m => m.id === placeId);
+        if (activeMarker) {
+          activeMarker.marker.getElement().classList.add('active-marker');
+          if (!activeMarker.marker.getPopup().isOpen()) {
+            activeMarker.marker.togglePopup(); // Open popup for active marker
+          }
+        }
+        currentActiveChapterId = placeId;
+      }
+
+      // Close popups of non-active markers
+      markers.forEach(m => {
+        if (m.id !== placeId && m.marker.getPopup().isOpen()) {
+          m.marker.togglePopup();
+        }
+      });
+    }
+
+    function setupScrollListener() {
+      const chapterElements = storyChaptersContainer.querySelectorAll('.chapter');
+      if (chapterElements.length === 0) return;
+
+      const sidebarScrollRoot = document.getElementById('sidebar');
+
+      // Define a "scan line" or activation zone within the sidebar viewport
+      // This is about 20% from the top of the sidebar viewport, and 10px high.
+      const scanBandTopOffset = Math.floor(sidebarScrollRoot.clientHeight * 0.20);
+      const scanBandHeight = 10; //px
+
+      // rootMargin: top right bottom left
+      // Negative top margin: effectively moves the "top" of the observation area down.
+      // Negative bottom margin: effectively moves the "bottom" of the observation area up.
+      // This creates a thin horizontal band for triggering.
+      const observerOptions = {
+        root: sidebarScrollRoot,
+        rootMargin: `-${scanBandTopOffset}px 0px -${sidebarScrollRoot.clientHeight - scanBandTopOffset - scanBandHeight}px 0px`,
+        threshold: 0.01 // Trigger as soon as any part of the element enters the band
+      };
+
+      const intersectionCallback = (entries) => {
+        const intersectingEntries = entries.filter(entry => entry.isIntersecting);
+
+        if (intersectingEntries.length > 0) {
+          // If multiple entries are in the band (e.g., fast scroll), pick the one that's highest in the DOM.
+          intersectingEntries.sort((a, b) => a.target.offsetTop - b.target.offsetTop);
+          const entryToActivate = intersectingEntries[0];
+          const placeId = parseInt(entryToActivate.target.id.split('-')[1]);
+
+          // Activate if it's not the one that was just clicked (handled by lastActivatedByScroll)
+          // and not already the active chapter.
+          if (lastActivatedByScroll !== placeId && currentActiveChapterId !== placeId) {
+            flyToChapter(placeId);
+            setActiveChapter(placeId);
+          } else if (lastActivatedByScroll === placeId && currentActiveChapterId !== placeId) {
+            // This handles the case where a click set lastActivatedByScroll,
+            // but another scroll event quickly followed for a *different* chapter.
+            // Ensure that chapter is activated if it wasn't the current one.
+            flyToChapter(placeId);
+            setActiveChapter(placeId);
+          }
+        }
+      };
+
+      const observer = new IntersectionObserver(intersectionCallback, observerOptions);
+      chapterElements.forEach(el => observer.observe(el));
+    }
+
+  </script>
+</body>
+
+</html>
+```
